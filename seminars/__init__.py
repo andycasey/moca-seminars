@@ -9,11 +9,8 @@ from flask_oauth import OAuth
 #from flask_openid import OpenID
 #from flask_googlelogin import GoogleLogin
 
-app = Flask(__name__)
-app.config.from_object("config")
-
-db = SQLAlchemy(app)
-
+from app import app, db
+from views import *
 #lm = GoogleLogin(app)
 
 oauth = OAuth()
