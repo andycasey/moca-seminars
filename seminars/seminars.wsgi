@@ -1,7 +1,15 @@
-#!/var/www/seminars/seminars/venv/bin/python
+#!/usr/bin/python
+import os
 import sys
 import logging
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/seminars/")
+
+here = os.path.dirname(__file__)
+activate_this = os.path.join(here, "venv/bin/activate_this.py")
+execfile(activate_this, dict(__file__=activate_this))
+
+path = os.path.join(here, os.pardir)
+if path not in sys.path:
+    sys.path.append(path)
 
 from seminars import app as application

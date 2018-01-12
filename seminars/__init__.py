@@ -34,4 +34,5 @@ google = oauth.remote_app('google',
 #lm.init_app(app)
 #oid = OpenID(app, os.path.join(app.root_path, "tmp"))
 
-
+if __name__ == "__main__":
+    app.run()
