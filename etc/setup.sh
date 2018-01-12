@@ -23,6 +23,3 @@ sudo cp ../etc/seminars.conf /etc/apache2/sites-available/
 sudo a2dissite 000-default
 sudo a2ensite seminars
 sudo service apache2 reload
-
-sudo seminars/venv/bin/python db_create.py
-
