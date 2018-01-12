@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/var/www/seminars/seminars/venv/bin/python
 import sys
 import logging
 logging.basicConfig(stream=sys.stderr)
