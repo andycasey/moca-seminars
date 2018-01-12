@@ -5,6 +5,7 @@ nectar.key
 nectar.key.pub
 nectar.sh
 config.py
+config.prod.py
 
 *.db
 *.pyc
