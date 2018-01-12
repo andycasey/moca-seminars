@@ -1,0 +1,87 @@
+{% include "base.html" %}
+
+{% block content %}
+<h1>Suggest a speaker</h1>
+<form action="/suggest" method="POST" name="suggest_speaker">
+
+    {{ form.csrf_token }}
+
+    <b>Speaker details</b>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                First name:
+            </div>
+            <div class="col-4">
+                {{ form.first_name(size=30) }}
+            </div>
+            <div class="col-4">
+                {% for error in form.first_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Surname:
+            </div>
+            <div class="col-4">
+                {{ form.last_name(size=30) }}
+            </div>
+            <div class="col-4">
+                {% for error in form.last_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Email address:
+            </div>
+            <div class="col-4">
+                {{ form.email(size=60) }}
+            </div>
+            <div class="col-4">
+                {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Institution:
+            </div>
+            <div class="col-4">
+                {{ form.institution(size=60) }}
+            </div>
+            <div class="col-4">
+                {% for error in form.institution.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+    <b>Speaker availability</b>
+
+    If the proposed speaker is already planning to visit Monash then please enter
+    the dates when the speaker will arrive. Estimated dates are acceptable.
+
+    If they are not already planning to visit Monash then use today until the
+    end of the calendar year as the availability dates, and we will schedule it.
+    
+
+    <input type="submit" value="Suggest speaker">
+    
+</form>
+
+{% endblock %}

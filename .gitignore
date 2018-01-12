@@ -1,0 +1,14 @@
+.DS_Store
+.gitignore
+
+nectar.key
+nectar.key.pub
+nectar.sh
+config.py
+
+*.db
+*.pyc
+
+
+NOTES.md
+
