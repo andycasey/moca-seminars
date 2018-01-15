@@ -12,8 +12,8 @@ class SuggestSpeakerForm(FlaskForm):
 
     institution = StringField("institution", validators=[DataRequired()])
 
-    #personal_url = StringField("personal_url",
-    #                           validators=[URL(message="Invalid URL")])
+    personal_url = StringField("personal_url",
+                               validators=[])# TODO: URL(message="Invalid URL")])
 
     """
 
@@ -23,8 +23,6 @@ class SuggestSpeakerForm(FlaskForm):
             message="This field is required for statistical purposes.")
         ],
         choices=("Prefer not to say", "Non-binary", "Female", "Male"))
-
-
 
 
     has_already_scheduled_visit = BooleanField(
@@ -46,7 +44,6 @@ class SuggestSpeakerForm(FlaskForm):
 
     """
 
-    #notes = StringField("notes")
     #short_bio = StringField("short_bio")
 
 

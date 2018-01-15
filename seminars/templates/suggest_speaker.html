@@ -66,6 +66,20 @@
         </div>
 
 
+        <div class="row">
+            <div class="col-4">
+                Speaker's personal URL:
+            </div>
+            <div class="col-4">
+                {{ form.personal_url(size=60) }}
+            </div>
+            <div class="col-4">
+                {% for error in form.personal_url.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+            </div>
+        </div>
+
 
 
     </div>

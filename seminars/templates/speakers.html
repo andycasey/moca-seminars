@@ -1,7 +1,24 @@
 {% include "base.html" %}
 
+<p>
+    <a class="btn btn-lg btn-success pull-right" href="/suggest" role="button">Suggest a speaker</a>
+</p>
+
+<h1 class="bd-title" id="content">Upcoming speakers</h1>
+
 {% block content %}
 
-<a href="/suggest"> Suggest a speaker</a>
+[ show list of upcoming speakers ]
+
+<ul>
+{% for speaker in speakers %}
+    <li> <a href="/speakers/{{ speaker.id }}">{{ speaker.last_name }}, {{ speaker.first_name }} ({{speaker.email }})</a></li>
+{% endfor %}
+</ul>
+
+<h1 class="bd-title" id="content">Suggested speakers</h1>
+      
+[ show list of speakers that are suggested but not yet booked ]
+
 
 {% endblock %}

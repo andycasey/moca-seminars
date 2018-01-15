@@ -14,7 +14,9 @@ def index():
 
 @app.route("/speakers")
 def speakers():
-    return render_template("speakers.html", title="Seminar speakers")
+    return render_template("speakers.html", 
+        title="Seminar speakers", 
+        speakers=db.session.query(Speaker).order_by(Speaker.id.desc()))
 
 
 
@@ -24,16 +26,20 @@ def suggest_speaker():
 
     if form.validate_on_submit():
 
-        # Create a Speaker instance from the form inputs.
+        # Check that we don't have this speaker already.
+        exists = Speaker.query.filter_by(email=form.email.data).first()
+        if exists is not None:
+            # TODO: handle this better.
+            flash("Speaker already exists")
+            return redirect("/speakers")
 
+        # Create a Speaker instance from the form inputs.
         speaker = Speaker(
-            first_name=form.first_name.data,
-            last_name=form.last_name.data,
+            first_name=form.first_name.data.title(),
+            last_name=form.last_name.data.title(),
             email=form.email.data,
             institution=form.institution.data
         )
-
-        print("Speaker {}".format(speaker))
 
         db.session.add(speaker)
         db.session.commit()
@@ -41,7 +47,8 @@ def suggest_speaker():
 
         return redirect("/speakers")
 
-    return render_template("suggest_speaker.html", form=form,
+    return render_template(
+        "suggest_speaker.html", form=form,
         title="Suggest a spaker")
 
 
