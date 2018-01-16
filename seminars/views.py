@@ -10,14 +10,16 @@ from .models import User, Speaker, Seminar
 def index():
     return render_template("template.html", title="MoCA seminar series")
 
-
+@app.route("/faq")
+def faq():
+    return render_template("faq.html")
 
 
 @app.route("/seminars")
 def seminars():
     return render_template("seminars.html",
-                           upcoming_seminars=db.session.query(Seminar),
-                           previous_seminars=[])
+                           upcoming_seminars=db.session.query(Seminar).filter(Seminar.speaker_id > 0).limit(10),
+                           unscheduled_seminar_blocks=db.session.query(Seminar).filter(Seminar.is_confirmed != True).limit(10))
 
 @app.route("/speakers")
 def speakers():

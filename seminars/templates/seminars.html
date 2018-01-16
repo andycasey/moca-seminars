@@ -27,19 +27,13 @@
 </table>
 
 
-<h1 class="bd-title">Unscheduled seminar blocks</h1>
+<h1 class="bd-title">Next 10 unscheduled seminar blocks</h1>
 
-<table class="table">
-    <thead class="thead-light">
-        <tr>
-            <td scope="col">Name</td>
-            <td scope="col">Institute</td>
-            <td scope="col">Date</td>
-            <td scope="col">Title</td>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<ul>
+    {% for seminar in unscheduled_seminar_blocks %}
+        <li><a href="/seminar/{{ seminar.id }}">{{ seminar.start_datetime.strftime('%A, %B %d %I:%M %p') }}</a></li>
+    {% endfor %}
+</ul>
 
 
 {% endblock %}

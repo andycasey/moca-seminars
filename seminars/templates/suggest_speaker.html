@@ -1,93 +1,142 @@
 {% include "base.html" %}
 
 {% block content %}
-<h1>Suggest a speaker</h1>
+<h1>Suggest a seminar speaker</h1>
 <form action="/suggest" method="POST" name="suggest_speaker">
 
     {{ form.csrf_token }}
 
     <p>
-        Please enter the name, institution, and contact details of the speaker below.
-        If the speaker is already planning to visit Monash, then please enter their approximate availability to help with scheduling.
+        Please enter the name, institution, and contact details of the proposed speaker.
     </p>
 
     <div class="container">
-        <div class="form-row">
-            <div class="col">
-                Name:
-            </div>
-            <div class="col">
-                {{ form.first_name(size=30, class="form-control", placeholder="First name") }}
-            </div>
-            <div class="col">
-                {{ form.last_name(size=30, class="form-control", placeholder="Last name") }}
-            </div>
-            <div class="col">
-                {% for error in form.first_name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}<br>
-            </div>
+        <div class="form-group">
+
+                <div class="col">
+                    Name:
+                </div>
+                <div class="col-5">
+                    {{ form.first_name(size=30, class="form-control", placeholder="First name") }}
+                </div>
+                <div class="col-5">
+                    {{ form.last_name(size=30, class="form-control", placeholder="Last name") }}
+                </div>
+                <div class="col">
+                    {% for error in form.first_name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {% for error in form.last_name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-group">
             <div class="col">
                 Email address:
             </div>
-            <div class="col">
-                {{ form.email(class="form-control") }}
+            <div class="col-5">
+                {{ form.email(class="form-control", size=50) }}
             </div>
             <div class="col">
                 {% for error in form.email.errors %}
                     <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}<br>
+                {% endfor %}
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-4">
+        <div class="form-group">
+            <div class="col">
                 Institution:
             </div>
-            <div class="col-4">
-                {{ form.institution(size=60) }}
+            <div class="col-5">
+                {{ form.institution(size=60, class="form-control") }}
             </div>
-            <div class="col-4">
+            <div class="col">
                 {% for error in form.institution.errors %}
                     <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}<br>
+                {% endfor %}
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="col">
+                Gender:
+            </div>
+            <div class="col-5">
+                {{ form.gender(class="form-control") }}
+            </div>
+            <div class="col">
+                {% for error in form.gender.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
 
-        <div class="row">
-            <div class="col-4">
-                Speaker's personal URL:
+        <div class="form-group">
+            <div class="col">
+                Speaker's personal website:
             </div>
-            <div class="col-4">
-                {{ form.personal_url(size=60) }}
+            <div class="col-5">
+                {{ form.personal_url(class="form-control") }}
             </div>
-            <div class="col-4">
+            <div class="col">
                 {% for error in form.personal_url.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}<br>
             </div>
         </div>
 
+        <p>
+            If the speaker is already planning to visit Monash University then please 
+            provide their approximate availability to help with scheduling. 
+            A selection of seminar dates will be offered to the speaker if no constraints are given.
+        </p>
 
+        <div class="form-group">
+            <div class="col form-check">
+                {{ form.has_already_scheduled_visit(id="visit_already_planned", class="form-check-input", type="checkbox") }}
+                <label class="form-check-label" for="visit_already_planned">
+                The speaker already has plans to visit Monash University.
+                </label>
+            </div>
+        </div>
+
+        <div class="container" id="availability" style="display: none;">
+            <div class="form-group"><div class="col-5"><h4>Availability constraints</h4></div></div>
+            <div class="form-group">
+                <div class="col-5">
+                    Arrival date to Monash University:
+                </div>
+                <div class="col-3">
+                    {{ form.availability_start(class="form-control") }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-5">
+                    Departure date from Monash University:
+                </div>
+                <div class="col-3">
+                    {{ form.availability_end(class="form-control") }}
+                </div>
+            </div>
+        </div>
 
     </div>
-
-
-    <b>Speaker availability</b>
-
-    If the proposed speaker is already planning to visit Monash then please enter
-    the dates when the speaker will arrive. Estimated dates are acceptable.
-
-    If they are not already planning to visit Monash then use today until the
-    end of the calendar year as the availability dates, and we will schedule it.
     
-
-    <input type="submit" value="Suggest speaker">
+    <hr>
+    <p>    
+        <a class="btn btn-success" href="/suggest" role="button">Suggest speaker</a>
+    </p>
     
 </form>
+<script>
+$(function() {
+        $('#visit_already_planned').on('change', function() {
+            $("#availability").toggle(this.checked);
+        });
+    });
+</script>
 
 {% endblock %}

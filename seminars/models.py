@@ -38,7 +38,7 @@ class Speaker(db.Model):
     first_name = db.Column(db.String(30))
     last_name = db.Column(db.String(30))
 
-    gender = db.Column(db.String(1))
+    gender = db.Column(db.String())
 
     #seniority/level?
 
@@ -68,6 +68,8 @@ class Seminar(db.Model):
     abstract = db.Column(db.String())
 
     # room booking: where/is confirmed?
+    # TODO
+    location = db.String(90)
 
     # start/end time
     start_datetime = db.Column(db.DateTime(timezone=True), nullable=False)
