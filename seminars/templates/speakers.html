@@ -8,17 +8,26 @@
 
 {% block content %}
 
-[ show list of upcoming speakers ]
-
-<ul>
-{% for speaker in speakers %}
-    <li> <a href="/speakers/{{ speaker.id }}">{{ speaker.last_name }}, {{ speaker.first_name }} ({{speaker.email }})</a></li>
-{% endfor %}
-</ul>
-
-<h1 class="bd-title" id="content">Suggested speakers</h1>
-      
-[ show list of speakers that are suggested but not yet booked ]
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Institute</th>
+            <th scope="col">Host</th>
+            <th scope="col">Seminar date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for speaker in speakers %}
+        <tr>
+            <th scope="row"><a href="/speaker/{{ speaker.id }}">{{ speaker.last_name}}, {{ speaker.first_name }}</a></th>
+            <td>{{ speaker.institution }}</td>
+            <td>(None)</td>
+            <td>(TBS)</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 
 {% endblock %}

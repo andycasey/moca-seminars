@@ -3,20 +3,37 @@ from flask_login import current_user
 from app import app, db, google
 
 from .forms import SuggestSpeakerForm
-from .models import User, Speaker
+from .models import User, Speaker, Seminar
 
 @app.route('/')
 @app.route('/index')
-@app.route("/seminars")
 def index():
     return render_template("template.html", title="MoCA seminar series")
 
+
+
+
+@app.route("/seminars")
+def seminars():
+    return render_template("seminars.html",
+                           upcoming_seminars=db.session.query(Seminar),
+                           previous_seminars=[])
 
 @app.route("/speakers")
 def speakers():
     return render_template("speakers.html", 
         title="Seminar speakers", 
         speakers=db.session.query(Speaker).order_by(Speaker.id.desc()))
+
+@app.route("/speaker/<int:user_id>")
+def speaker_details(user_id):
+    speaker = Speaker.query.filter_by(id=user_id).first()
+    if speaker is not None:
+        return render_template("speaker.html",
+                               speaker=speaker)
+    else:
+        # TODO: handle this better
+        return render_template("404.html")
 
 
 

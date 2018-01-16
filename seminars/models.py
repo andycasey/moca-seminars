@@ -70,6 +70,7 @@ class Seminar(db.Model):
     # room booking: where/is confirmed?
 
     # start/end time
+    start_datetime = db.Column(db.DateTime(timezone=True), nullable=False)
 
     # accommodation booking?
 

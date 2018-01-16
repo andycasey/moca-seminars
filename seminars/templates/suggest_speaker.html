@@ -6,45 +6,37 @@
 
     {{ form.csrf_token }}
 
-    <b>Speaker details</b>
+    <p>
+        Please enter the name, institution, and contact details of the speaker below.
+        If the speaker is already planning to visit Monash, then please enter their approximate availability to help with scheduling.
+    </p>
 
     <div class="container">
-        <div class="row">
-            <div class="col-4">
-                First name:
+        <div class="form-row">
+            <div class="col">
+                Name:
             </div>
-            <div class="col-4">
-                {{ form.first_name(size=30) }}
+            <div class="col">
+                {{ form.first_name(size=30, class="form-control", placeholder="First name") }}
             </div>
-            <div class="col-4">
+            <div class="col">
+                {{ form.last_name(size=30, class="form-control", placeholder="Last name") }}
+            </div>
+            <div class="col">
                 {% for error in form.first_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}<br>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-4">
-                Surname:
-            </div>
-            <div class="col-4">
-                {{ form.last_name(size=30) }}
-            </div>
-            <div class="col-4">
-                {% for error in form.last_name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}<br>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-4">
+        <div class="form-row">
+            <div class="col">
                 Email address:
             </div>
-            <div class="col-4">
-                {{ form.email(size=60) }}
+            <div class="col">
+                {{ form.email(class="form-control") }}
             </div>
-            <div class="col-4">
+            <div class="col">
                 {% for error in form.email.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}<br>

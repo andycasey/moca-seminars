@@ -1,0 +1,45 @@
+{% include "base.html" %}
+
+
+<h1 class="bd-title" id="content">Upcoming seminars</h1>
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Institute</th>
+            <th scope="col">Host</th>
+            <th scope="col">Seminar date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seminar in upcoming_seminars %}
+        <tr>
+            <th scope="row"><a href="/seminar/{{ seminar.id }}">{{ seminar.start_datetime.strftime('%A, %B %d %I:%M %p') }}</a></th>
+            <td>{{ seminar.institution }}</td>
+            <td>(None)</td>
+            <td>(TBS)</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h1 class="bd-title">Unscheduled seminar blocks</h1>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <td scope="col">Name</td>
+            <td scope="col">Institute</td>
+            <td scope="col">Date</td>
+            <td scope="col">Title</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+{% endblock %}
