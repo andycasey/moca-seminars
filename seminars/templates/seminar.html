@@ -1,0 +1,23 @@
+{% include "base.html" %}
+
+<h1 class="bd-title" id="content">Seminar details</h1>
+
+{% block content %}
+
+Where: {{ seminar.location }}
+When: {{ seminar.start_datetime }}
+Host: {{ speaker.host }}
+
+<h1>{{ seminar.title }}</h1>
+<p><a  href="/speaker/{{ speaker.id }}"><b>{{ speaker.first_name }} {{ speaker.last_name }} ({{ speaker.institution }})</b></a></p>
+<p>{{ seminar.abstract }}</p>
+
+# show speaker details in form view
+
+# show upcoming seminars that are free
+
+# book speaker --> sends email with link to google form to accept/decline
+
+
+
+{% endblock %}

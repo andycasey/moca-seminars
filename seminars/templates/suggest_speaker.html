@@ -4,7 +4,8 @@
 <h1>Suggest a seminar speaker</h1>
 <form action="/suggest" method="POST" name="suggest_speaker">
 
-    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ form.name }}
 
     <p>
         Please enter the name, institution, and contact details of the proposed speaker.
@@ -112,6 +113,11 @@
                 <div class="col-3">
                     {{ form.availability_start(class="form-control") }}
                 </div>
+                <div class="col">
+                    {% for error in form.availability_start.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
             </div>
             <div class="form-group">
                 <div class="col-5">
@@ -120,6 +126,12 @@
                 <div class="col-3">
                     {{ form.availability_end(class="form-control") }}
                 </div>
+                <div class="col">
+                    {% for error in form.availability_end.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+
             </div>
         </div>
 
@@ -127,7 +139,7 @@
     
     <hr>
     <p>    
-        <a class="btn btn-success" href="/suggest" role="button">Suggest speaker</a>
+        <input class="btn btn-success" type="submit" value="Suggest speaker">
     </p>
     
 </form>
@@ -136,6 +148,8 @@ $(function() {
         $('#visit_already_planned').on('change', function() {
             $("#availability").toggle(this.checked);
         });
+
+        $('#visit_already_planned').trigger("change");
     });
 </script>
 

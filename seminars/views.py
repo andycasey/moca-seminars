@@ -38,11 +38,26 @@ def speaker_details(user_id):
         return render_template("404.html")
 
 
+@app.route("/seminar/<int:seminar_id>")
+def seminar_details(seminar_id):
+    seminar = Seminar.query.filter_by(id=seminar_id).first()
+    speaker = Speaker.query.filter_by(id=seminar.speaker_id).first()
+
+    if seminar is not None and speaker is not None:
+        return render_template("seminar.html", seminar=seminar, speaker=speaker)
+    elif seminar is not None and speaker is None:
+        # Book a speaker
+        return render_template("book_seminar.html", seminar=seminar)
+
+    else:
+        # TODO: handle this better
+        return render_template("404.html")
+
+
 
 @app.route("/suggest", methods=["GET", "POST"])
 def suggest_speaker():
     form = SuggestSpeakerForm(request.form)
-
     if form.validate_on_submit():
 
         # Check that we don't have this speaker already.
@@ -65,6 +80,11 @@ def suggest_speaker():
         flash("Speaker suggested")
 
         return redirect("/speakers")
+
+    print("DID NOT VALIDATE")
+    print(form.errors)
+    print(form.availability_start)
+    print(form.availability_start.data)
 
     return render_template(
         "suggest_speaker.html", form=form,
