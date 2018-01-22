@@ -10,7 +10,7 @@ class Seminar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     speaker_id = db.Column(db.Integer, db.ForeignKey('Speaker.id'))
-    speaker_confirmed = db.Column(db.Boolean)
+    speaker_confirmed = db.Column(db.Boolean, default=False)
 
     title = db.Column(db.String(90))
     abstract = db.Column(db.String())

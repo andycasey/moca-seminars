@@ -1,6 +1,8 @@
 from flask import render_template, flash, redirect, g, session, url_for, request
 from flask_login import current_user
 from app import app, db, google
+from flask.ext.wtf import Form
+from wtforms.ext.appengine.db import model_form
 
 from .forms import SuggestSpeakerForm
 from .models import User, Speaker, Seminar
@@ -36,6 +38,43 @@ def speaker_details(user_id):
     else:
         # TODO: handle this better
         return render_template("404.html")
+
+@app.route("/speaker/<int:user_id>/book")
+def book_speaker(user_id):
+    speaker = Speaker.query.filter_by(id=user_id).first()
+    if speaker is not None:
+        # Get available seminars given constraints.
+        seminar_slots = db.session.query(Seminar)\
+                                  .filter(Seminar.speaker_confirmed is not True)\
+                                  .filter(Seminar.start_datetime.between(
+                                      speaker.availability_start, 
+                                      speaker.availability_end))\
+                                  .all()
+
+        return render_template("book_speaker.html", speaker=speaker,
+            seminar_slots=seminar_slots)
+    else:
+        # TODO: handle this better.
+        return render_template("404.html")
+
+
+@app.route("/speaker/<int:user_id>/edit")
+def edit_speaker_details(user_id):
+
+    #MyForm = model_form(Speaker, base_class=Form, db_session=db.session)
+    speaker = Speaker.query.filter_by(id=user_id).first()
+    form = SuggestSpeakerForm(obj=speaker)
+    #form = MyForm(request.form, speaker)
+
+    if form.validate_on_submit():
+        form.populate_obj(speaker)
+        speaker.put()
+        flash("Speaker details updated")
+        return redirect("/speaker/{:.0f}".format(user_id))
+
+    return render_template("suggest_speaker.html", form=form,
+        title="Edit speaker details")
+
 
 
 @app.route("/seminar/<int:seminar_id>")

@@ -1,0 +1,103 @@
+{% include "base.html" %}
+
+<h1 class="bd-title" id="content">Book seminar for {{ speaker.first_name }} {{ speaker.last_name }}</h1>
+
+{% block content %}
+
+<div class="container">
+
+    <div class="form-group">
+        <div class="col">
+            <b>Email address:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.email }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Institution:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.institution }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Availability start:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.availability_start.strftime('%d %B') }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Availability end:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.availability_end.strftime('%d %B') }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Host:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.host_full_name }} (<a href="mailto:{{ speaker.host_email }}">{{ speaker.host_email }}</a>)
+        </div>
+    </div>
+
+</div>
+
+<form>
+
+<h4>Available seminar slots</h4>
+<div class="container">
+    <p>The following seminar slots are unallocated given the availability constraints.</p>
+    {% for seminar in seminar_slots %}
+    <div class="col form-check">
+        <input type="checkbox" class="form-check-input" id="slot-{{ seminar.start_datetime.strftime('%d-%b') }}" checked>
+        <label class="form-check-label" for="slot-{{ seminar.start_datetime.strftime('%d-%b') }}">
+            {{ seminar.start_datetime.strftime('%d %B %y @ %H:%M ')}}
+        </label>
+    </div>
+    {% else %}
+    <div class="col-formcheck">
+        <b>No seminar slots available!</b>
+    </div>
+    {% endfor %}
+
+
+</div>
+<h4>Logistics</h4>
+<div class="container">
+    <div class="form-group">
+        <div class="col form-check">
+            <input type="checkbox" class="form-check-input" id="offer-accommodation">
+            <label class="form-check-label" for="offer-accommodation">Offer to arrange accommodation for the speaker</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col form-check">
+            <input type="checkbox" class="form-check-input" id="offer-flights">
+            <label class="form-check-label" for="offer-flights">Offer to arrange domestic flights for the speaker</label>
+        </div>
+    </div>
+
+</div>
+
+</form>
+
+
+<div class="container">
+    <a href="/speaker/{{ speaker.id }}/edit" class="btn btn-primary">Edit speaker details</a>
+    <a href="/speaker/{{ speaker.id }}/book" class="btn btn-success">Book speaker for seminar</a>
+</div>
+
+
+{% endblock %}
