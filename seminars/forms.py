@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Email, URL, Required
+from wtforms.validators import DataRequired, Email, URL, Required, StopValidation
 from wtforms.fields.html5 import DateField
 from datetime import  datetime
 
@@ -24,6 +24,16 @@ class RequiredIf(Required):
             super(RequiredIf, self).__call__(form, field)
 
 
+class MonashEmailRequired(Required):
+
+    def __call__(self, form, field):
+        if not field.data.strip().lower().endswith("@monash.edu"):
+            raise StopValidation("A Monash email address is required.")
+
+        else:
+            super(MonashEmailRequired, self).__call__(form, field)
+            
+
 class SuggestSpeakerForm(FlaskForm):
 
     first_name = StringField("first_name", validators=[DataRequired()])
@@ -35,6 +45,11 @@ class SuggestSpeakerForm(FlaskForm):
 
     personal_url = StringField("personal_url",
                                validators=[])# TODO: URL(message="Invalid URL")])
+
+    host_full_name = StringField("host_full_name", validators=[DataRequired()])
+    host_email = StringField("host_email", 
+        validators=[DataRequired(), Email(), MonashEmailRequired()])
+
 
     gender = SelectField(
         "gender",

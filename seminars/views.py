@@ -25,7 +25,7 @@ def seminars():
 def speakers():
     return render_template("speakers.html", 
         title="Seminar speakers", 
-        speakers=db.session.query(Speaker).order_by(Speaker.id.desc()))
+        speakers=db.session.query(Speaker).order_by(Speaker.availability_end.asc()))
 
 @app.route("/speaker/<int:user_id>")
 def speaker_details(user_id):
@@ -72,7 +72,14 @@ def suggest_speaker():
             first_name=form.first_name.data.title(),
             last_name=form.last_name.data.title(),
             email=form.email.data,
-            institution=form.institution.data
+            gender=form.gender.data,
+            institution=form.institution.data.title(),
+            personal_url=form.personal_url.data,
+            availability_start=form.availability_start.data,
+            availability_end=form.availability_end.data,
+            has_already_scheduled_visit=form.has_already_scheduled_visit.data,
+            host_full_name=form.host_full_name.data,
+            host_email=form.host_email.data,
         )
 
         db.session.add(speaker)

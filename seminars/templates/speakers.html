@@ -8,13 +8,14 @@
 
 {% block content %}
 
-<table class="table">
+<table class="table table-sm">
     <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Institute</th>
+            <th scope="col">Gender</th>
             <th scope="col">Host</th>
-            <th scope="col">Seminar date</th>
+            <th scope="col">Availability</th>
         </tr>
     </thead>
     <tbody>
@@ -22,8 +23,9 @@
         <tr>
             <th scope="row"><a href="/speaker/{{ speaker.id }}">{{ speaker.last_name}}, {{ speaker.first_name }}</a></th>
             <td>{{ speaker.institution }}</td>
-            <td>(None)</td>
-            <td>(TBS)</td>
+            <td>{{ speaker.gender }}</td>
+            <td><a href="mailto:{{ speaker.host_email }}">{{ speaker.host_full_name }}</a></td>
+            <td>{{ speaker.availability_start.strftime('%d %b') }} to {{ speaker.availability_end.strftime('%d %b') }}</td>
         </tr>
         {% endfor %}
     </tbody>

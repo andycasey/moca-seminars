@@ -1,16 +1,80 @@
 {% include "base.html" %}
 
-<h1 class="bd-title" id="content">Speaker details</h1>
+<h1 class="bd-title" id="content">{{ speaker.first_name }} {{ speaker.last_name }}</h1>
 
 {% block content %}
 
-{{ speaker.email }}
-# show speaker details in form view
+<div class="container">
 
-# show upcoming seminars that are free
+    <div class="form-group">
+        <div class="col">
+            <b>Email address:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.email }}
+        </div>
+    </div>
 
-# book speaker --> sends email with link to google form to accept/decline
+    <div class="form-group">
+        <div class="col">
+            <b>Institution:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.institution }}
+        </div>
+    </div>
 
+    <div class="form-group">
+        <div class="col">
+            <b>Gender:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.gender }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Speaker's personal website:</b>
+        </div>
+        <div class="col-5">
+            <a href="{{ speaker.personal_url }}">{{ speaker.personal_url }}</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Availability start:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.availability_start }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Availability end:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.availability_end }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <b>Host:</b>
+        </div>
+        <div class="col-5">
+            {{ speaker.host_full_name }} (<a href="mailto:{{ speaker.host_email }}">{{ speaker.host_email }}</a>)
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <a href="/speaker/{{ speaker.id }}/edit" class="btn btn-primary">Edit speaker details</a>
+    <a href="/speaker/{{ speaker.id }}/book" class="btn btn-success">Book speaker for seminar</a>
+</div>
 
 
 {% endblock %}
